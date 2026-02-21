@@ -236,7 +236,22 @@ async function createInitialFundsTransaction(req, res) {
 
 }
 
+async function getTransactionsByAccount(req, res) {
+    const { accountId } = req.params;
+
+    const transactions = await transactionModel.find({
+        $or: [
+            { fromAccount: accountId },
+            { toAccount: accountId }
+        ]
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+        transactions
+    });
+}
 module.exports = {
     createTransaction,
-    createInitialFundsTransaction
+    createInitialFundsTransaction,
+    getTransactionsByAccount
 }
