@@ -8,6 +8,12 @@ const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
+const cors = require("cors");
+
+app.use(cors({
+  origin: "http://localhost:5173",  // your frontend
+  credentials: true
+}));
 
 /**
  * - Routes required
